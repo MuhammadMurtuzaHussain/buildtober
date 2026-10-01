@@ -1,0 +1,706 @@
+<!DOCTYPE html>
+<html lang="en-IE">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Buildtober: 31 days, 31 things worth building</title>
+<meta name="description" content="A free October build-along. Pick a level, roll an idea that solves a real problem, ship it and collect a sticker for every day you build.">
+<meta name="theme-color" content="#F3EFFF">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Buildtober: 31 days, 31 things worth building">
+<meta property="og:description" content="Pick a level, roll an idea that solves a real problem, ship it and collect a sticker for every day you build.">
+<meta name="twitter:card" content="summary">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%F0%9F%8E%9F%EF%B8%8F%3C/text%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bagel+Fat+One&family=Gabarito:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  box-sizing:border-box;
+  padding-top:env(safe-area-inset-top,0px);
+  padding-bottom:env(safe-area-inset-bottom,0px);
+  --paper:#F3EFFF; --paper2:#E6DEFF; --surface:#FFFFFF; --ink:#1D1545; --muted:#5A5380; --edge:#1D1545;
+  --violet:#5B3DF5; --on-violet:#FFFFFF; --pumpkin:#FF8A3D;
+  --l1:#4ED1A1; --l2:#FFC83D; --l3:#FF6F91; --on:#1D1545;
+  --panel:#1D1545; --panel-ink:#F3EFFF; --screen:#F7F4FF; --screen-ink:#1D1545;
+  --display:"Bagel Fat One","Arial Rounded MT Bold","Trebuchet MS",system-ui,sans-serif;
+  --body:"Gabarito","Segoe UI",system-ui,-apple-system,Helvetica,Arial,sans-serif;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --paper:#140E30; --paper2:#1E1648; --surface:#1B1440; --ink:#F3EFFF; --muted:#B5ADD9; --edge:#F3EFFF;
+    --violet:#A292FF; --on-violet:#140E30; --panel:#261C5C;
+  }
+}
+:root[data-theme="dark"]{
+  --paper:#140E30; --paper2:#1E1648; --surface:#1B1440; --ink:#F3EFFF; --muted:#B5ADD9; --edge:#F3EFFF;
+  --violet:#A292FF; --on-violet:#140E30; --panel:#261C5C;
+}
+html{scroll-padding-top:calc(env(safe-area-inset-top,0px) + 72px);scroll-behavior:smooth}
+*,*::before,*::after{box-sizing:border-box}
+body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--body);font-size:17px;line-height:1.55;-webkit-text-size-adjust:100%}
+button,input,select,textarea{font:inherit;color:inherit}
+:focus-visible{outline:3px solid var(--violet);outline-offset:3px}
+a{color:var(--violet);font-weight:600}
+h1,h2,h3{font-family:var(--display);font-weight:400;line-height:1.05;margin:0;letter-spacing:0}
+h2{font-size:clamp(30px,5vw,44px);margin-bottom:10px}
+h3{font-size:22px;margin-bottom:6px}
+p{margin:0 0 12px}
+.wrap{max-width:980px;margin:0 auto;padding:0 18px}
+section{padding:44px 0}
+.muted{color:var(--muted)}
+.small{font-size:14px}
+
+/* top bar */
+.bar{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:var(--paper);border-bottom:2.5px solid var(--edge)}
+.bar .wrap{display:flex;align-items:center;gap:14px;min-height:60px}
+.brand{font-family:var(--display);font-size:24px;text-decoration:none;color:var(--ink);margin-right:auto}
+.bar nav{display:flex;gap:4px;overflow-x:auto}
+.bar nav a{text-decoration:none;color:var(--ink);font-weight:600;padding:10px 12px;border-radius:10px;white-space:nowrap;min-height:44px;display:inline-flex;align-items:center}
+.bar nav a:hover{background:var(--paper2)}
+@media (max-width:640px){.bar nav{display:none}}
+
+/* buttons */
+.btn{border:2.5px solid var(--edge);background:var(--surface);border-radius:14px;padding:10px 18px;cursor:pointer;min-height:46px;font-weight:700;box-shadow:3px 3px 0 var(--edge);transition:transform .08s,box-shadow .08s}
+.btn:hover{transform:translate(-1px,-1px);box-shadow:4px 4px 0 var(--edge)}
+.btn:active{transform:translate(3px,3px);box-shadow:0 0 0 var(--edge)}
+.btn.primary{background:var(--violet);color:var(--on-violet)}
+.btn.small{min-height:38px;padding:6px 12px;font-size:14px}
+.btn.quiet{box-shadow:none;border-width:2px}
+.btn.quiet:hover{transform:none;background:var(--paper2)}
+.btn:disabled{opacity:.5;cursor:not-allowed;box-shadow:none;transform:none}
+.seg{display:flex;flex-wrap:wrap;gap:8px}
+.seg button{border:2.5px solid var(--edge);background:var(--surface);border-radius:12px;padding:8px 14px;cursor:pointer;min-height:44px;font-weight:600}
+.seg button[aria-pressed="true"]{background:var(--ink);color:var(--paper)}
+.seg button:disabled{opacity:.45;cursor:not-allowed}
+input[type=text],input[type=url],select,textarea{width:100%;background:var(--surface);border:2.5px solid var(--edge);border-radius:12px;padding:10px 12px;min-height:46px}
+textarea{min-height:96px;resize:vertical}
+.field{display:flex;flex-direction:column;gap:6px;margin-bottom:14px}
+.field label,.lbl{font-weight:700;font-size:15px}
+.row{display:flex;flex-wrap:wrap;gap:12px;align-items:center}
+.check{display:flex;gap:10px;align-items:center;min-height:40px}
+.check input{width:22px;height:22px;accent-color:var(--violet)}
+
+/* hero */
+.hero{padding:56px 0 18px}
+.hero h1{font-family:var(--display);font-weight:400;font-size:clamp(58px,13vw,132px);line-height:.88;margin-bottom:18px}
+.hero p.lead{font-size:clamp(19px,2.6vw,24px);max-width:34ch;font-weight:500}
+.hero .note{max-width:52ch}
+
+/* level machine */
+.levels{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin:22px 0 18px}
+@media (max-width:720px){.levels{grid-template-columns:1fr}}
+.lvl{--c:var(--l1);text-align:left;cursor:pointer;border:3px solid var(--edge);border-radius:28px;background:var(--c);color:var(--on);padding:18px 20px 16px;box-shadow:6px 6px 0 var(--edge);transition:transform .08s,box-shadow .08s;position:relative;min-height:150px;display:flex;flex-direction:column;justify-content:flex-end}
+.lvl[data-l="2"]{--c:var(--l2)} .lvl[data-l="3"]{--c:var(--l3)}
+.lvl:hover{transform:translate(-2px,-2px);box-shadow:8px 8px 0 var(--edge)}
+.lvl:active{transform:translate(5px,5px);box-shadow:1px 1px 0 var(--edge)}
+.lvl[aria-pressed="true"]{outline:4px solid var(--violet);outline-offset:4px}
+.lvl .num{font-family:var(--display);font-size:68px;line-height:.9}
+.lvl .nm{font-weight:700;font-size:19px}
+.lvl .tm{font-size:15px;font-weight:500}
+.lvl svg{position:absolute;right:16px;top:14px;width:54px;height:54px}
+.lvl svg .shape{fill:rgba(255,255,255,.55);stroke:var(--on);stroke-width:3}
+.pills{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:18px}
+.pill{border:2px solid var(--edge);background:var(--surface);border-radius:999px;padding:6px 14px;cursor:pointer;min-height:40px;font-weight:600}
+.pill[aria-pressed="true"]{background:var(--violet);color:var(--on-violet);border-color:var(--edge)}
+.screen{background:var(--panel);color:var(--panel-ink);border:3px solid var(--edge);border-radius:28px;padding:18px;box-shadow:6px 6px 0 var(--edge)}
+.screen .inner{background:var(--screen);color:var(--screen-ink);border-radius:18px;padding:22px;min-height:220px}
+.screen .inner h3{font-size:clamp(26px,4vw,36px);margin:8px 0 10px}
+.screen .idle{display:flex;align-items:center;min-height:176px;font-size:20px;font-weight:500;max-width:36ch}
+.screen .shuffle h3{opacity:.55}
+.screen .pop{animation:pop .35s ease-out}
+@keyframes pop{0%{transform:scale(.96) rotate(-1deg);opacity:.4}100%{transform:none;opacity:1}}
+.tagrow{display:flex;flex-wrap:wrap;gap:8px}
+.tag{font-size:13px;font-weight:700;padding:3px 10px;border-radius:999px;border:2px solid var(--screen-ink);background:transparent;color:var(--screen-ink)}
+.tag.l1{background:var(--l1)} .tag.l2{background:var(--l2)} .tag.l3{background:var(--l3)}
+.step{border-left:5px solid var(--violet);padding:4px 0 4px 14px;margin:14px 0 16px;font-weight:500}
+.step b{display:block;font-size:14px;color:#4B3FB0}
+.pinrow{display:flex;flex-wrap:wrap;gap:12px;align-items:center}
+.pinrow select{width:auto;min-width:210px;background:#fff;color:#1D1545;border-color:#1D1545}
+.screen .btn{background:#fff;color:#1D1545;border-color:#1D1545;box-shadow:3px 3px 0 #1D1545}
+.screen .btn.primary{background:#5B3DF5;color:#fff}
+
+/* sticker sheet */
+.sheet{background:var(--surface);border:3px solid var(--edge);border-radius:28px;padding:22px 20px 26px;box-shadow:6px 6px 0 var(--edge)}
+.sheethead{display:flex;flex-wrap:wrap;justify-content:space-between;gap:10px 24px;align-items:baseline;margin-bottom:16px}
+.sheethead .nums{display:flex;gap:22px;flex-wrap:wrap}
+.sheethead .nums span{font-weight:600}
+.sheethead .nums b{font-family:var(--display);font-weight:400;font-size:28px;margin-right:6px}
+.stickers{display:grid;grid-template-columns:repeat(auto-fill,minmax(62px,1fr));gap:12px 10px}
+.stk{--c:var(--l1);border:0;background:none;padding:0;cursor:pointer;aspect-ratio:1/1;position:relative;transform:rotate(var(--rot,0deg));transition:transform .12s}
+.stk[data-l="2"]{--c:var(--l2)} .stk[data-l="3"]{--c:var(--l3)}
+.stk:hover{transform:rotate(0deg) scale(1.1)}
+.stk svg{width:100%;height:100%;overflow:visible;display:block}
+.stk .shape{fill:var(--c);stroke:var(--edge);stroke-width:3;stroke-linejoin:round}
+.stk text{font-family:var(--display);font-size:25px;fill:var(--ink);text-anchor:middle}
+.stk .tdot{fill:var(--pumpkin);stroke:var(--edge);stroke-width:2.5}
+.stk.empty .shape{fill:none;stroke-width:2;stroke-dasharray:4 5;opacity:.55}
+.stk.empty text{fill:var(--muted)}
+.stk.planned .shape{fill-opacity:.32}
+.stk.building .shape{fill-opacity:.66}
+.stk.shipped text{fill:var(--on)}
+.stk.skipped .shape{fill:none;stroke:var(--violet);stroke-dasharray:4 5;stroke-width:2.5}
+.stk.skipped text{fill:var(--violet)}
+.stk.sel::after{content:"";position:absolute;left:28%;right:28%;bottom:-8px;height:4px;border-radius:3px;background:var(--ink)}
+.stk.stamp{animation:stamp .5s cubic-bezier(.2,.9,.3,1.3)}
+@keyframes stamp{0%{transform:scale(1.9) rotate(-14deg);opacity:0}60%{opacity:1}100%{transform:rotate(var(--rot,0deg)) scale(1)}}
+.legend{display:flex;flex-wrap:wrap;gap:6px 18px;font-size:14px;color:var(--muted);margin-top:18px}
+
+/* day panel */
+.daywrap{margin-top:30px;background:var(--paper2);border:3px solid var(--edge);border-radius:28px;padding:22px}
+.daybar{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:14px}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+@media (max-width:720px){.grid2{grid-template-columns:1fr}}
+.ideabox{background:var(--surface);border:2.5px solid var(--edge);border-radius:18px;padding:16px 18px;margin-bottom:16px}
+.ideabox h3{font-size:26px}
+details.draft{margin-top:6px}
+details.draft summary{cursor:pointer;font-weight:700;min-height:44px;display:flex;align-items:center}
+.draftbox{font-size:15px;min-height:240px}
+
+/* lists and plan */
+.cols{display:grid;grid-template-columns:repeat(auto-fit,minmax(270px,1fr));gap:30px 36px;margin-top:20px}
+.lvlrow{display:flex;gap:14px;align-items:flex-start;margin-bottom:16px}
+.lvlrow svg{flex:0 0 46px;width:46px;height:46px}
+.lvlrow .shape{stroke:var(--edge);stroke-width:3}
+.timeline{list-style:none;margin:0;padding:0}
+.timeline li{padding:10px 0;border-top:2px solid var(--paper2)}
+.timeline li:first-child{border-top:0}
+.themelist{list-style:none;margin:0;padding:0}
+.themelist li{display:flex;justify-content:space-between;gap:12px;align-items:center;padding:10px 0;border-top:2px solid var(--paper2)}
+.themelist li:first-child{border-top:0}
+ol.steps{padding-left:22px;margin:0 0 16px}
+ol.steps li{margin-bottom:8px}
+pre.code{background:var(--panel);color:var(--panel-ink);border-radius:16px;padding:16px;overflow-x:auto;font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:14px;margin:0 0 12px;white-space:pre-wrap}
+.callout{border:2.5px solid var(--edge);background:var(--surface);border-radius:18px;padding:14px 18px;margin:16px 0}
+.item{display:flex;gap:12px;justify-content:space-between;align-items:center;flex-wrap:wrap;padding:12px 0;border-top:2px solid var(--paper2)}
+.item:first-child{border-top:0}
+.item select{width:auto;min-height:40px}
+details.draft summary::after,details.backup summary::after{content:"+";margin-left:10px;font-family:var(--display);font-size:24px;line-height:1}
+details[open].draft summary::after,details[open].backup summary::after{content:"\2212"}
+details.backup{margin-top:24px}
+details.backup summary{cursor:pointer;font-weight:700;min-height:44px;display:flex;align-items:center}
+
+footer{border-top:2.5px solid var(--edge);margin-top:40px;padding:30px 0 44px}
+footer p{max-width:70ch}
+.toast{position:fixed;left:50%;transform:translateX(-50%);bottom:calc(20px + env(safe-area-inset-bottom,0px));background:var(--ink);color:var(--paper);padding:12px 18px;border-radius:14px;font-weight:600;max-width:90vw;opacity:0;pointer-events:none;transition:opacity .2s;z-index:10}
+.toast.show{opacity:1}
+@media (prefers-reduced-motion: reduce){html{scroll-behavior:auto}*{transition:none!important;animation:none!important}}
+</style>
+</head>
+<body>
+<header class="bar">
+  <div class="wrap">
+    <a class="brand" href="#top">Buildtober</a>
+    <nav aria-label="Sections">
+      <a href="#roll">Roll an idea</a>
+      <a href="#sheet">Sticker sheet</a>
+      <a href="#kit">Starter kit</a>
+      <a href="#plan">Plan</a>
+      <a href="#hf">Hacktoberfest</a>
+    </nav>
+    <button class="btn small quiet" data-a="theme" aria-label="Switch between light and dark theme">Theme</button>
+  </div>
+</header>
+
+<main id="top">
+<div class="wrap">
+
+  <div class="hero">
+    <h1>Buildtober</h1>
+    <p class="lead">31 days. 31 things worth building.</p>
+    <p class="note">A free build-along for October. Pick a level, roll an idea that solves a real problem, ship it, and stick a sticker on your sheet for every day you build. Made for anyone who wants to skill up by making things in public.</p>
+  </div>
+
+  <section id="roll" style="padding-top:20px">
+    <h2>Pick a level</h2>
+    <p class="muted" style="max-width:56ch">Each idea names the problem it solves and gives you a first step, so you can start in minutes. Not sure? Start with Level 1.</p>
+    <div id="controls"></div>
+    <div id="screen"></div>
+  </section>
+
+  <section id="sheet">
+    <h2>Your sticker sheet</h2>
+    <p class="muted">Pin ideas to days, tap a day to log it and collect a sticker when you ship. Your progress stays in this browser.</p>
+    <div id="sheetwrap"></div>
+    <div id="day"></div>
+  </section>
+
+  <section id="kit">
+    <h2>Starter kit</h2>
+    <div class="cols">
+      <div>
+        <h3>Your first repo in ten minutes</h3>
+        <ol class="steps">
+          <li>Create a public GitHub repository called <b>buildtober</b>.</li>
+          <li>Add one folder per day: <b>day-01</b>, <b>day-02</b> and so on.</li>
+          <li>Give each folder a README using the template.</li>
+          <li>Commit as you go and push before you post.</li>
+          <li>Add a licence. MIT is a simple, permissive choice.</li>
+        </ol>
+        <p class="small muted">Small and finished beats big and abandoned. Cut scope, not days.</p>
+      </div>
+      <div>
+        <h3>README template</h3>
+        <pre class="code" id="readme"># Day 07: Project name
+
+## The problem
+One or two sentences on who this helps.
+
+## How to run it
+The steps to run it locally.
+
+## What I learned
+Two or three takeaways.</pre>
+        <button class="btn small" data-a="copy-readme">Copy template</button>
+      </div>
+    </div>
+  </section>
+
+  <section id="plan">
+    <h2>How the month works</h2>
+    <div class="cols">
+      <div>
+        <h3>The three levels</h3>
+        <div class="lvlrow"><svg viewBox="0 0 64 64" aria-hidden="true"><circle class="shape" cx="32" cy="32" r="27" fill="var(--l1)"/></svg><div><b>Level 1: Quick win.</b><br>An hour or two. One clear job: a single script, page or command-line tool.</div></div>
+        <div class="lvlrow"><svg viewBox="0 0 64 64" aria-hidden="true"><rect class="shape" x="6" y="6" width="52" height="52" rx="15" fill="var(--l2)"/></svg><div><b>Level 2: Solid build.</b><br>An evening. A small app or tool with tests and a proper README.</div></div>
+        <div class="lvlrow"><svg viewBox="0 0 64 64" aria-hidden="true"><polygon class="shape" points="" id="burst1" fill="var(--l3)" stroke-linejoin="round"/></svg><div><b>Level 3: Showcase.</b><br>A weekend. Several parts, docs and a demo. Worth a proper write-up.</div></div>
+      </div>
+      <div>
+        <h3>Weekly themes</h3>
+        <p class="small muted">Optional. Press a button to roll ideas in that theme.</p>
+        <ul class="themelist">
+          <li><span><b>Days 1 to 7:</b> Threat intelligence and quick wins</span><button class="btn small quiet" data-a="theme-go" data-v="intel">Roll</button></li>
+          <li><span><b>Days 8 to 14:</b> Open-source AI</span><button class="btn small quiet" data-a="theme-go" data-v="ai">Roll</button></li>
+          <li><span><b>Days 15 to 21:</b> Detection, cloud and edge</span><button class="btn small quiet" data-a="theme-go" data-v="detect">Roll</button></li>
+          <li><span><b>Days 22 to 28:</b> Governance, risk and people</span><button class="btn small quiet" data-a="theme-go" data-v="grc">Roll</button></li>
+          <li><span><b>Days 29 to 31:</b> Polish, share and wrap up</span><button class="btn small quiet" data-a="theme-go" data-v="dev">Roll</button></li>
+        </ul>
+      </div>
+      <div>
+        <h3>A good build day</h3>
+        <ul class="timeline">
+          <li><b>5 minutes.</b> Roll an idea. Decide the smallest version that still works.</li>
+          <li><b>Most of your time.</b> Build. Commit early and often.</li>
+          <li><b>20 minutes.</b> Write the README, grab a screenshot, push.</li>
+          <li><b>15 minutes.</b> Share it and reply to comments. Others learn from what you made.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section id="hf">
+    <div id="hfwrap"></div>
+    <details class="backup">
+      <summary>Back up or move your progress</summary>
+      <p class="muted small">Your sheet is stored in this browser only. Copy a backup to keep it safe, or paste one to restore it.</p>
+      <div class="row" style="margin-bottom:12px"><button class="btn small" data-a="backup-copy">Copy backup</button><button class="btn small quiet" data-a="backup-restore">Restore from box</button><button class="btn small quiet" data-a="reset">Reset everything</button></div>
+      <textarea id="backupbox" aria-label="Backup text" placeholder="Paste a backup here to restore it"></textarea>
+    </details>
+  </section>
+
+</div>
+</main>
+
+<footer>
+  <div class="wrap">
+    <p><b>Buildtober</b> was created by <a href="https://muhammadmurtuza.com" target="_blank" rel="noopener noreferrer">Muhammad Murtuza Hussain</a> as a free community project for people who want to learn by building. Free and open source under the MIT licence: use it, share it and make it your own. Suggest ideas or fork it on GitHub.</p>
+    <p class="small muted">Independent project. Not affiliated with or endorsed by Hacktoberfest, MLH, DEV or DigitalOcean. Ideas are suggestions only: review any tool you build for safety and use test data, never real systems you do not own.</p>
+  </div>
+</footer>
+<div id="toast" class="toast" role="status" aria-live="polite"></div>
+
+<script>
+(function(){
+'use strict';
+var YEAR=2026, MONTH=9, DAYS=31;
+var LEVELS={
+  1:{name:'Level 1',tag:'Quick win',time:'An hour or two'},
+  2:{name:'Level 2',tag:'Solid build',time:'An evening'},
+  3:{name:'Level 3',tag:'Showcase',time:'A weekend'}
+};
+var STATUS=[['planned','Planned'],['building','Building'],['shipped','Shipped'],['skipped','Rest day']];
+var TAGS={intel:'Threat intelligence',ai:'Open-source AI',detect:'Detection and logs',cloud:'Cloud, edge and appsec',grc:'Governance and risk',human:'People and behaviour',dev:'General dev'};
+var PILLS=[['any','Anything'],['intel','Threat intel'],['ai','Open-source AI'],['detect','Detection'],['cloud','Cloud and edge'],['grc','Governance and risk'],['human','People'],['dev','General dev']];
+var CH_STATUS=[['planned','Planned'],['progress','In progress'],['submitted','Submitted'],['earned','Sticker earned']];
+
+/* [level, category, theme, title, problem, first step] */
+var RAW=[
+[1,"c","human","Passphrase strength meter with breach check","People judge password strength by gut feel. Score passphrases by entropy and check them against known breaches with the k-anonymity range API, so nothing sensitive leaves the browser.","Calculate entropy from character sets and length, then add the range request."],
+[1,"c","intel","Phishing URL red-flag scanner","Paste a link and see the warning signs: punycode lookalikes, long subdomain chains, brand names in odd places and risky TLDs, explained in plain English.","Parse the URL with the URL API and list your first two checks."],
+[1,"c","intel","Email header analyser","Raw email headers are unreadable to most staff. Parse them into a hop-by-hop path with SPF, DKIM and DMARC results highlighted.","Split the headers into Received lines and print them oldest first."],
+[1,"c","cloud","JWT inspector and linter","Decode a token locally and flag alg none, missing expiry, long lifetimes and sensitive claims, with a fix suggested for each.","Base64url-decode the header and payload, then write your first rule for alg none."],
+[1,"c","grc","security.txt generator","Many organisations give researchers no way to report a vulnerability. Generate a valid RFC 9116 security.txt file with sensible defaults.","Read RFC 9116 and build a form for the Contact, Expires and Policy fields."],
+[1,"c","grc","CVSS calculator that explains itself","Turn a CVSS v3.1 vector into a score and a plain-language summary that a manager can act on.","Pick the eight base metrics and implement the scoring formula from the spec."],
+[1,"c","cloud","Content Security Policy builder and linter","Build a CSP from checkboxes, then lint it for unsafe-inline, wildcard sources and missing directives.","List the main directives and generate a header string from checkboxes."],
+[1,"c","intel","Drag-and-drop file hash verifier","Verify a download against a published SHA-256 in the browser, with a clear match or mismatch result.","Use the Web Crypto API to hash a dropped file with SHA-256."],
+[1,"c","intel","IOC extractor and defanger","Paste a report and pull out IPs, domains, URLs and hashes, defanged and ready to share in a threat intelligence note.","Write one regex per indicator type and test them on a public threat report."],
+[1,"c","detect","Incident timeline timestamp normaliser","Logs arrive in mixed time zones and formats. Normalise them to UTC and merge them into one clean incident timeline.","Parse three common log formats and convert each to UTC in ISO 8601."],
+[1,"c","grc","NIS2 incident notification clock","Enter the detection time and get the 24-hour early warning, 72-hour notification and one-month final report deadlines under Article 23.","Add 24 hours, 72 hours and one month to the detection time and show each deadline."],
+[1,"c","cloud","CIDR and segmentation planner","Split a network range into subnets and visualise which zones are allowed to talk to each other.","Convert a prefix length to a netmask and compute the usable host range."],
+[1,"c","cloud","HTTP security header grader","Paste response headers and get a graded report with the exact header lines to add.","Define a short list of required headers and score the pasted response against it."],
+[1,"c","grc","Incident severity matrix","Combine impact and urgency into a priority level and list the notification duties each level triggers.","Draw a three-by-three grid of impact against urgency and assign a priority to each cell."],
+[2,"c","detect","SSH brute-force log analyser","Parse auth.log, group failed logins by source, flag bursts and map the pattern to MITRE ATT&CK with a summary report.","Count the failed-password lines by source IP in a sample auth.log."],
+[2,"c","detect","Mini secrets scanner for Git repos","Scan a repository for leaked keys using regex and entropy checks, with a baseline file so known findings stay quiet.","Start with two regexes for cloud keys, then add an entropy check."],
+[2,"c","cloud","Dockerfile security linter","Flag root users, latest tags, secrets in ENV and unpinned packages, and explain the risk of each in one line.","Parse each instruction and write one rule that flags a missing USER line."],
+[2,"c","cloud","Terraform plan scanner","Read a Terraform plan JSON and flag public buckets, open security groups and unencrypted storage before anything is deployed.","Export a sample plan as JSON and walk the resource changes."],
+[2,"c","grc","Risk register with a 5x5 heatmap","Load a CSV of risks, score them by likelihood and impact, and render an ISO 27005-style heatmap and treatment list.","Define a CSV with likelihood and impact columns and plot a 5x5 grid."],
+[2,"c","grc","ISO 27001 Statement of Applicability builder","Walk through the Annex A 2022 controls, record applicability and justification, and export a clean SoA table.","List the control groups in a data file and add an applicable toggle to each."],
+[2,"c","intel","Threat feed aggregator","Pull public IOC feeds, deduplicate them and export a single CSV and a simple STIX-style bundle.","Fetch one public feed, parse it and write the deduplicated rows to CSV."],
+[2,"c","detect","Low-interaction honeypot","A small TCP listener that logs connection attempts and produces a daily summary of what was probed. Run it only on a network you own.","Open a socket on a spare port and log the source address of each connection."],
+[2,"c","intel","DMARC aggregate report parser","DMARC reports arrive as XML nobody reads. Turn them into a readable summary of who is sending as your domain.","Parse a sample aggregate report with an XML library and group records by source."],
+[2,"c","detect","Sigma rule linter","Check Sigma rules for missing fields, bad ATT&CK tags and over-broad conditions before they reach the SIEM.","Load a rule as YAML and check that the required fields are present."],
+[2,"c","intel","Phishing .eml triage tool","Score a saved phishing email using headers, links and attachments, and produce a short analyst report.","Parse a saved email with your language's email library and list its links and attachments."],
+[2,"c","human","Awareness quiz with behavioural nudges","Generate security awareness questions from a JSON bank and test which nudges change answers, using synthetic data.","Write ten questions in JSON and build a quiz that records answers locally."],
+[2,"c","cloud","Kubernetes manifest linter","Flag privileged containers, hostPath mounts and missing resource limits in manifests, with fixes.","Load a manifest as YAML and flag containers that set privileged to true."],
+[3,"c","intel","Static malware triage pipeline","Take a sample file to hashes, strings, entropy, header details and YARA matches, then generate a one-page report. Use only safe test files.","Hash a harmless test file and extract its strings, then add entropy."],
+[3,"c","detect","Mini SOAR playbook runner","Ingest alerts as JSON, run enrichment and containment steps in dry-run mode, and keep an audit trail.","Define an alert format and a playbook with two dry-run steps."],
+[3,"c","cloud","IAM attack-path visualiser","Turn IAM policies into a graph and highlight privilege-escalation paths an attacker could follow.","Model users, roles and permissions as a graph with three example escalation paths."],
+[3,"c","grc","Threat model as code","Describe a system in YAML and generate a data-flow diagram, STRIDE threats and a risk-ranked report.","Choose a YAML format for components and flows, then generate one STRIDE table."],
+[3,"c","cloud","SBOM vulnerability and licence report","Read a CycloneDX SBOM, query the OSV API and report vulnerable and risky-licence components.","Take a small CycloneDX file and query OSV for one component."],
+[3,"c","detect","Detection-as-code repository with CI","Store detection rules in Git and have CI test each one against sample benign and malicious logs.","Write one rule, one benign log and one malicious log, and a test that checks both."],
+[3,"c","detect","DDoS mitigation sandbox","Simulate traffic patterns locally and compare token bucket, sliding window and challenge-based mitigations.","Generate synthetic request streams and implement a token bucket limiter."],
+[3,"c","cloud","Edge device hardening auditor","Audit a Raspberry Pi or IoT gateway against a baseline and generate a remediation script with a score.","Write five baseline checks as shell commands and score the results."],
+[3,"c","grc","Climate-resilience dependency model","Map cyber-physical dependencies such as cooling and power, then score scenarios like a heatwave taking out a data centre.","List five dependencies, such as power and cooling, and score a heatwave on each."],
+[3,"c","grc","DORA, NIS2 and ISO 27001 crosswalk","Build a searchable crosswalk of overlapping requirements so one control can evidence several regulations.","Pick ten requirements, map them by hand and store the mapping as data."],
+[3,"c","human","Phishing simulation analytics dashboard","Visualise click and report rates by nudge type and department using synthetic data, with a short behavioural reading of the results.","Generate a synthetic dataset of clicks and reports by nudge type."],
+[3,"c","human","Explainable malicious URL classifier","Train a small model with scikit-learn, show feature importance and publish a model card that states its limits.","Build features from URL length, digits and special characters, then train a baseline."],
+[3,"c","detect","CloudTrail anomaly detector","Baseline normal API activity and flag unusual console logins, new regions and risky calls.","Count events per user per day from a sample log and flag the outliers."],
+[1,"d","dev","LinkedIn text formatter","Convert Markdown notes into clean LinkedIn-ready text with Unicode emphasis and a character counter.","Map letters to Unicode bold ranges and add a live character count."],
+[1,"d","dev","README quality linter","Score a README for install steps, usage, licence and screenshots, and say what to add first.","Check for headings such as Install and Usage and report the missing ones."],
+[1,"d","dev","Meeting cost calculator","Show the running cost of a meeting from attendee count and average rate, to nudge shorter meetings.","Multiply attendees by an hourly rate and update the total every second."],
+[1,"d","dev","Readability scorer for blog drafts","Paste a draft and get reading time, sentence length and plain-language suggestions.","Count words and sentences and compute a reading-time estimate."],
+[1,"d","dev","UTM link builder","Build consistent campaign links and keep a log, so results can be compared across channels.","Combine the base URL with source, medium and campaign into one link."],
+[1,"d","dev","Regex tester with plain-English explainer","Test a pattern against sample text and explain each part of it in words.","Tokenise a pattern and write a plain-English line for each token."],
+[2,"d","dev","GitHub profile README generator","Pull your repositories and topics from the GitHub API and generate a profile README with a pinned-projects section.","Call the public repos endpoint and render your top five by stars."],
+[2,"d","dev","Deliverable tracker for project teams","Turn a CSV of tasks and due dates into a clean timeline and a list of what is at risk this month.","Read a CSV and sort the tasks into overdue, due soon and later."],
+[2,"d","dev","150-line static blog generator","Convert Markdown files into a small static blog with an index page and an RSS feed.","Convert one Markdown file to HTML, then loop over a folder."],
+[2,"d","dev","Git log to weekly changelog","Summarise a week of commits into a readable changelog grouped by type.","Run git log with a custom format and group the messages by prefix."],
+[2,"d","dev","Talk timer with pacing alerts","Set slide sections and get gentle alerts when you are running ahead or behind.","Define sections with durations and show a countdown for the current one."],
+[3,"d","dev","Open-source contribution finder","Query GitHub for open issues labelled good first issue, filter by language and rank by project activity.","Query the GitHub issue search API for the label good first issue."],
+[3,"d","dev","Personal knowledge base with search","Store notes as Markdown, index them with SQLite full-text search and add tags and backlinks.","Create a SQLite table with FTS5 and index three notes."],
+[3,"d","dev","Social metrics dashboard","Aggregate social media exports into charts that show what works, week by week.","Load a sample CSV export and chart posts and reach per week."],
+[3,"d","dev","Static site accessibility checker","Crawl a small site and report missing alt text, heading order problems and colour contrast failures.","Fetch one page and flag the images without alt text."],
+[1,"c","ai","skills.md for phishing triage","Write a reusable skills.md that teaches an open-source agent to triage a phishing report step by step, then test it on five sample emails.","Write the steps a careful analyst follows, in plain language, then test them."],
+[1,"c","ai","Local prompt-injection test set","Build a small set of prompt-injection prompts and a script that runs them against a local open-weight model to see which ones succeed.","Write ten injection prompts and run them against a model on your own machine."],
+[1,"c","ai","Model card generator","Generate a plain-English model card covering purpose, data, limits and risks for any open-weight model a team wants to adopt.","List the sections of a model card and turn each into a short form question."],
+[2,"c","ai","Local phishing triage assistant","Use an open-weight model on your own machine to explain why an email looks suspicious, so staff mail never goes to a cloud service.","Run a small open-weight model locally and prompt it with one sample email."],
+[2,"c","ai","Log summariser with cited evidence","Summarise an auth log into an analyst briefing with a local model, and check that every claim points to a real log line.","Feed 50 log lines to a local model and require line numbers in every claim."],
+[2,"c","ai","Prompt-injection scanner for agent inputs","Flag hidden instructions in web pages, emails and files before an agent reads them.","Write patterns for ignore-previous-instructions style text and scan sample pages."],
+[2,"c","ai","Compliance Q&A over your own control notes","Ask questions over your own policy and control notes using local embeddings, with answers that point to the source paragraph.","Split three notes into paragraphs and embed them with a local embedding model."],
+[2,"c","ai","Threat advisory summariser with citations","Turn public security advisories into a weekly brief with a local model, quoting the source sentence for each point.","Collect three public advisories and ask the model for a brief with sources."],
+[2,"c","ai","Acceptable-AI-use policy generator","Generate a one-page AI use policy for a small organisation from a short questionnaire, tied to data protection and NIS2 risks.","List ten questions about data, tools and approvals, and draft the policy sections they feed."],
+[3,"c","ai","Dry-run SOC agent","An open-source agent that reads an alert, runs read-only enrichment tools and drafts an analyst note, with every tool call logged and no actions taken.","Define two read-only tools and let the agent call them on one sample alert."],
+[3,"c","ai","LLM security evaluation harness","Score open-weight models on jailbreak resistance, data leakage and invented CVE details, and publish a comparison report.","Write twenty test prompts, run two models and record pass or fail."],
+[3,"c","ai","Fine-tuned log classifier on synthetic data","Fine-tune a small open-weight model to label log lines as benign or suspicious using synthetic data, and report honestly where it fails.","Generate a small synthetic log set and measure a baseline classifier first."],
+[3,"c","ai","Malware behaviour explainer","Summarise public sandbox reports into ATT&CK-mapped plain-English findings and measure accuracy against analyst notes.","Take one public sandbox report and write the ATT&CK mapping by hand first."]
+];
+var IDEAS=RAW.map(function(r,i){return {id:'i'+i,l:r[0],c:r[1]==='c'?'Cyber':'Dev',g:r[2],t:r[3],d:r[4],s:r[5]};});
+
+/* ---------- helpers ---------- */
+function $(s,r){return (r||document).querySelector(s);}
+function esc(s){return String(s==null?'':s).replace(/[&<>"']/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c];});}
+function safeUrl(u){u=String(u||'').trim();return /^https?:\/\//i.test(u)?u:'';}
+function uid(){return Date.now().toString(36)+Math.random().toString(36).slice(2,6);}
+function todayN(){var t=new Date();return (t.getFullYear()===YEAR&&t.getMonth()===MONTH)?t.getDate():null;}
+function dateLabel(n,o){return new Date(YEAR,MONTH,n).toLocaleDateString('en-IE',o||{weekday:'long',day:'numeric',month:'long'});}
+function labelOf(list,v){for(var i=0;i<list.length;i++){if(list[i][0]===v)return list[i][1];}return v;}
+function findIdea(id){for(var i=0;i<IDEAS.length;i++){if(IDEAS[i].id===id)return IDEAS[i];}return null;}
+function burst(cx,cy,ro,ri,n){var p=[];for(var i=0;i<n*2;i++){var r=i%2?ri:ro,a=Math.PI*i/n-Math.PI/2;p.push((cx+r*Math.cos(a)).toFixed(1)+','+(cy+r*Math.sin(a)).toFixed(1));}return p.join(' ');}
+var BURST=burst(32,32,30,24,12);
+function shapeEl(level){
+  if(level===2)return '<rect class="shape" x="6" y="6" width="52" height="52" rx="15"/>';
+  if(level===3)return '<polygon class="shape" points="'+BURST+'"/>';
+  return '<circle class="shape" cx="32" cy="32" r="27"/>';
+}
+function toast(m){var el=$('#toast');el.textContent=m;el.classList.add('show');clearTimeout(toast.t);toast.t=setTimeout(function(){el.classList.remove('show');},2400);}
+function scrollToEl(sel){var el=$(sel);if(el&&el.scrollIntoView)el.scrollIntoView({behavior:'smooth',block:'start'});}
+
+/* ---------- state ---------- */
+var LS_KEY='buildtober-v1', LS_THEME='buildtober-theme';
+function blankDay(){return {ideaId:null,level:0,status:'planned',repo:'',notes:''};}
+function defaultState(){return {v:1,days:{},used:[],hf:{joined:false,ghw:false},challenges:[]};}
+function normalise(o){
+  var b=defaultState();if(!o||typeof o!=='object')return b;
+  b.days=(o.days&&typeof o.days==='object'&&!Array.isArray(o.days))?o.days:{};
+  b.used=Array.isArray(o.used)?o.used:[];
+  b.hf=Object.assign(b.hf,(o.hf&&typeof o.hf==='object')?o.hf:{});
+  b.challenges=Array.isArray(o.challenges)?o.challenges:[];
+  return b;
+}
+var S=defaultState();
+function loadLocal(){try{var r=localStorage.getItem(LS_KEY);if(r)return normalise(JSON.parse(r));}catch(e){}return null;}
+function save(){try{localStorage.setItem(LS_KEY,JSON.stringify(S));}catch(e){}}
+function getDay(n){return Object.assign(blankDay(),S.days[n]||{});}
+function setField(n,f,v){S.days[n]=Object.assign(blankDay(),S.days[n]||{});S.days[n][f]=v;save();}
+function isOpen(n){var d=S.days[n];return !(d&&(d.ideaId||d.status==='skipped'));}
+function nextOpenDay(){
+  var start=todayN()||1,n;
+  for(n=start;n<=DAYS;n++){if(isOpen(n))return n;}
+  for(n=1;n<start;n++){if(isOpen(n))return n;}
+  return null;
+}
+function tileState(n){
+  var d=S.days[n];if(!d)return 'empty';
+  if(d.status==='skipped')return 'skipped';
+  if(!d.ideaId)return 'empty';
+  return d.status;
+}
+function shippedCount(){var c=0;for(var n=1;n<=DAYS;n++){if(S.days[n]&&S.days[n].ideaId&&S.days[n].status==='shipped')c++;}return c;}
+function plannedCount(){var c=0;for(var n=1;n<=DAYS;n++){if(S.days[n]&&S.days[n].ideaId)c++;}return c;}
+function streak(){
+  var t=todayN(),n=t||DAYS,count=0;
+  function st(x){var d=S.days[x];return d?d.status:'planned';}
+  function shipped(x){var d=S.days[x];return !!(d&&d.ideaId&&d.status==='shipped');}
+  if(t&&!shipped(n)&&st(n)!=='skipped')n--;
+  for(;n>=1;n--){if(shipped(n))count++;else if(st(n)==='skipped')continue;else break;}
+  return count;
+}
+function stickers(){return S.challenges.filter(function(c){return c.status==='earned';}).length;}
+
+/* ---------- ui state ---------- */
+var ui={level:0,theme:'any',idea:null,flash:'',rolling:false,fresh:false,msg:'',pinnedNote:'',pinDay:null,day:null,
+  draftEdited:false,draftText:'',credit:false,justShipped:null};
+var rollTimer=null;
+function curDay(){return ui.day||todayN()||1;}
+
+/* ---------- idea machine ---------- */
+function pool(){
+  return IDEAS.filter(function(i){
+    if(S.used.indexOf(i.id)>-1)return false;
+    if(ui.level&&i.l!==ui.level)return false;
+    if(ui.theme!=='any'&&i.g!==ui.theme)return false;
+    return true;
+  });
+}
+function roll(){
+  if(!ui.level)return;
+  var p=pool();
+  if(ui.idea&&p.length>1)p=p.filter(function(i){return i.id!==ui.idea.id;});
+  ui.pinnedNote='';
+  if(!p.length){ui.idea=null;ui.msg='No unused ideas left for this combination. Try another level or theme.';renderScreen();return;}
+  ui.msg='';
+  var pick=p[Math.floor(Math.random()*p.length)];
+  var reduce=window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  clearInterval(rollTimer);
+  if(reduce){ui.idea=pick;ui.rolling=false;ui.fresh=false;renderScreen();return;}
+  ui.rolling=true;var ticks=0;
+  rollTimer=setInterval(function(){
+    ticks++;
+    if(ticks>=9){clearInterval(rollTimer);ui.rolling=false;ui.idea=pick;ui.fresh=true;}
+    else ui.flash=p[Math.floor(Math.random()*p.length)].t;
+    renderScreen();
+  },75);
+}
+function renderControls(){
+  var h='<div class="levels">';
+  [1,2,3].forEach(function(l){
+    h+='<button class="lvl" data-a="level" data-l="'+l+'" data-v="'+l+'" aria-pressed="'+(ui.level===l)+'"><svg viewBox="0 0 64 64" aria-hidden="true">'+shapeEl(l)+'</svg><span class="num">'+l+'</span><span class="nm">'+LEVELS[l].tag+'</span><span class="tm">'+LEVELS[l].time+'</span></button>';
+  });
+  h+='</div><div class="pills" role="group" aria-label="Theme">';
+  PILLS.forEach(function(p){h+='<button class="pill" data-a="pill" data-v="'+p[0]+'" aria-pressed="'+(ui.theme===p[0])+'">'+p[1]+'</button>';});
+  h+='</div>';
+  $('#controls').innerHTML=h;
+}
+function pinOptions(){
+  var target=(ui.pinDay&&isOpen(ui.pinDay))?ui.pinDay:nextOpenDay();
+  var h='';
+  for(var n=1;n<=DAYS;n++){
+    var open=isOpen(n);
+    h+='<option value="'+n+'"'+(n===target?' selected':'')+(open?'':' disabled')+'>Day '+n+' ('+esc(dateLabel(n,{weekday:'short',day:'numeric',month:'short'}))+')'+(open?'':' taken')+'</option>';
+  }
+  return {html:h,target:target};
+}
+function renderScreen(){
+  var h='<div class="screen"><div class="inner">';
+  if(ui.rolling){
+    h+='<div class="shuffle"><div class="tagrow"><span class="tag l'+ui.level+'">'+LEVELS[ui.level].name+'</span></div><h3>'+esc(ui.flash||'Rolling...')+'</h3></div>';
+  }else if(ui.idea){
+    var i=ui.idea,po=pinOptions();
+    h+='<div class="'+(ui.fresh?'pop':'')+'"><div class="tagrow"><span class="tag l'+i.l+'">'+LEVELS[i.l].name+': '+LEVELS[i.l].tag+'</span><span class="tag">'+esc(TAGS[i.g]||'')+'</span></div>';
+    h+='<h3>'+esc(i.t)+'</h3><p>'+esc(i.d)+'</p><div class="step"><b>Start here</b>'+esc(i.s)+'</div>';
+    h+='<div class="pinrow"><label class="small" for="pinday"><b>Pin to</b></label><select id="pinday" data-u="pinday"'+(po.target?'':' disabled')+'>'+po.html+'</select><button class="btn primary" data-a="pin"'+(po.target?'':' disabled')+'>Pin it</button><button class="btn" data-a="reroll">Roll again</button></div></div>';
+  }else if(ui.msg){
+    h+='<div class="idle">'+esc(ui.msg)+'</div>';
+  }else if(ui.pinnedNote){
+    h+='<div class="idle">'+esc(ui.pinnedNote)+'</div>';
+  }else{
+    h+='<div class="idle">Press a level above. Your idea lands here with a first step to start on.</div>';
+  }
+  h+='</div></div>';
+  $('#screen').innerHTML=h;
+  ui.fresh=false;
+}
+
+/* ---------- sticker sheet ---------- */
+function stickerHTML(n){
+  var st=tileState(n),d=getDay(n),t=todayN();
+  var level=d.ideaId?d.level:(st==='skipped'?0:0);
+  var i=findIdea(d.ideaId);
+  var rot=((n*37)%9)-4;
+  var cls='stk '+st+(n===t?' today':'')+(n===curDay()?' sel':'')+(ui.justShipped===n?' stamp':'');
+  var label='Day '+n+', '+dateLabel(n,{weekday:'long',day:'numeric',month:'long'})+', '+(st==='empty'?'nothing planned':(st==='skipped'?'rest day':labelOf(STATUS,d.status)+': '+(i?i.t:'')));
+  var h='<button class="'+cls+'" data-a="day" data-n="'+n+'" data-l="'+(level||1)+'" style="--rot:'+rot+'deg" title="'+esc(label)+'" aria-label="'+esc(label)+'"><svg viewBox="0 0 64 64" aria-hidden="true">'+shapeEl(st==='empty'||st==='skipped'?1:level)+'<text x="32" y="40">'+n+'</text>';
+  if(n===t)h+='<circle class="tdot" cx="55" cy="9" r="7"/>';
+  return h+'</svg></button>';
+}
+function renderSheet(){
+  var h='<div class="sheet"><div class="sheethead"><div class="nums"><span><b>'+shippedCount()+'</b>shipped</span><span><b>'+streak()+'</b>day streak</span><span><b>'+plannedCount()+'</b>pinned</span></div></div><div class="stickers">';
+  for(var n=1;n<=DAYS;n++)h+=stickerHTML(n);
+  h+='</div><div class="legend"><span>Circle: level 1</span><span>Square: level 2</span><span>Burst: level 3</span><span>Faded: pinned</span><span>Solid: shipped</span><span>Dashed violet: rest day</span></div></div>';
+  $('#sheetwrap').innerHTML=h;
+  ui.justShipped=null;
+}
+
+/* ---------- day panel ---------- */
+function buildDraft(n){
+  var d=getDay(n),i=findIdea(d.ideaId);
+  var L=[];
+  L.push('Day '+n+' of 31: '+(i?i.t:'[project]'));
+  L.push('');L.push('The problem: '+(i?i.d:'[what it solves]'));
+  if(d.notes&&d.notes.trim()){L.push('');L.push('What I learned:');L.push(d.notes.trim());}
+  L.push('');L.push('Code: '+(safeUrl(d.repo)||'[repo link]'));
+  L.push('Level '+(d.level||1)+' build for #Hacktoberfest.');
+  if(ui.credit){L.push('Idea from Buildtober by Muhammad Murtuza Hussain.');}
+  L.push('');L.push('#Hacktoberfest #Buildtober #BuildInPublic');
+  return L.join('\n');
+}
+function renderDay(){
+  var n=curDay(),d=getDay(n),i=findIdea(d.ideaId);
+  var h='<div class="daywrap"><div class="daybar"><button class="btn small quiet" data-a="prev"'+(n<=1?' disabled':'')+'>Previous day</button><div style="text-align:center"><h3 style="margin:0">Day '+n+'</h3><div class="muted small">'+esc(dateLabel(n))+'</div></div><button class="btn small quiet" data-a="next"'+(n>=DAYS?' disabled':'')+'>Next day</button></div>';
+  if(!i){
+    if(d.status==='skipped'){
+      h+='<p>This day is marked as a rest day. Rest keeps the streak safe and the month sustainable.</p><button class="btn" data-a="unrest">Unmark rest day</button>';
+    }else{
+      h+='<p>Nothing pinned to this day yet.</p><div class="row"><button class="btn primary" data-a="roll-for-day">Roll an idea for Day '+n+'</button><button class="btn" data-a="rest">Mark as rest day</button></div>';
+    }
+  }else{
+    h+='<div class="ideabox"><div class="tagrow"><span class="tag l'+i.l+'">'+LEVELS[i.l].name+': '+LEVELS[i.l].tag+'</span><span class="tag">'+esc(TAGS[i.g]||'')+'</span></div><h3 style="margin-top:8px">'+esc(i.t)+'</h3><p>'+esc(i.d)+'</p><div class="step"><b>Start here</b>'+esc(i.s)+'</div></div>';
+    h+='<div class="field"><span class="lbl">Status</span><div class="seg" role="group" aria-label="Status">';
+    STATUS.forEach(function(s){h+='<button data-a="status" data-v="'+s[0]+'" aria-pressed="'+(d.status===s[0])+'">'+s[1]+'</button>';});
+    h+='</div></div><div class="grid2"><div class="field"><label for="f-repo">Repository link</label><input type="url" id="f-repo" data-f="repo" value="'+esc(d.repo)+'" placeholder="https://github.com/you/buildtober"></div>';
+    h+='<div class="field"><label for="f-notes">What did you learn?</label><textarea id="f-notes" data-f="notes" placeholder="Two or three takeaways, one per line" style="min-height:70px">'+esc(d.notes)+'</textarea></div></div>';
+    h+='<details class="draft"><summary>Draft a post to share</summary><label class="check"><input type="checkbox" data-c="credit" '+(ui.credit?'checked':'')+'> Mention that the idea came from Buildtober</label>';
+    h+='<textarea id="draft" class="draftbox" aria-label="Post draft">'+esc(ui.draftEdited?ui.draftText:buildDraft(n))+'</textarea><div class="row" style="margin-top:10px"><button class="btn primary" data-a="copy">Copy draft</button><button class="btn quiet" data-a="rebuild">Rebuild from fields</button></div></details>';
+    h+='<div style="margin-top:14px"><button class="btn small quiet" data-a="unpin">Remove this idea and free the day</button></div>';
+  }
+  h+='</div>';
+  $('#day').innerHTML=h;
+}
+
+/* ---------- hacktoberfest ---------- */
+function ext(u,l){return '<a href="'+u+'" target="_blank" rel="noopener noreferrer">'+l+'</a>';}
+function renderHF(){
+  var h='<h2>Hacktoberfest 2026</h2><div class="callout">This year Hacktoberfest is about learning and building with open-source AI and open-weight models. Pull requests no longer count towards rewards; progress comes from virtual stickers earned through challenges, plus in-person Fests. MLH and DEV run it with DigitalOcean. Details can change, so check '+ext('https://hacktoberfest.com/questions/','the official FAQ')+'.</div>';
+  h+='<div class="cols"><div><h3>Key dates</h3><ul class="timeline"><li><b>All October.</b> Online Hacktoberfest with challenges and virtual stickers. '+ext('https://hacktoberfest.com/online/','Join online')+'.</li><li><b>9 to 15 October.</b> Global Hack Week on open-weight models. '+ext('https://ghw.mlh.com/','See the week')+'.</li></ul>';
+  h+='<div style="margin-top:12px"><label class="check"><input type="checkbox" data-h="joined" '+(S.hf.joined?'checked':'')+'> I have joined the online Hacktoberfest</label><label class="check"><input type="checkbox" data-h="ghw" '+(S.hf.ghw?'checked':'')+'> I attended a Global Hack Week session</label></div></div>';
+  h+='<div><div class="row" style="justify-content:space-between"><h3 style="margin:0">Challenge log</h3><span class="muted small">'+stickers()+' stickers earned</span></div><p class="small muted" style="margin-top:6px">Track the official challenges you take on.</p>';
+  h+='<div class="field"><label for="ch-name">Challenge</label><input type="text" id="ch-name" placeholder="Name of the challenge"></div><div class="field"><label for="ch-url">Link</label><input type="url" id="ch-url" placeholder="https://"></div>';
+  h+='<div class="row" style="margin-bottom:8px"><select id="ch-status" style="width:auto" aria-label="Status">';
+  CH_STATUS.forEach(function(s){h+='<option value="'+s[0]+'">'+s[1]+'</option>';});
+  h+='</select><button class="btn small" data-a="ch-add">Add challenge</button></div>';
+  S.challenges.forEach(function(c){
+    var u=safeUrl(c.url);
+    h+='<div class="item"><div>'+(u?'<a href="'+esc(u)+'" target="_blank" rel="noopener noreferrer">'+esc(c.name)+'</a>':'<b>'+esc(c.name)+'</b>')+'</div><div class="row"><select data-cf="status" data-id="'+esc(c.id)+'" aria-label="Status of '+esc(c.name)+'">';
+    CH_STATUS.forEach(function(s){h+='<option value="'+s[0]+'"'+(c.status===s[0]?' selected':'')+'>'+s[1]+'</option>';});
+    h+='</select><button class="btn small quiet" data-a="ch-del" data-id="'+esc(c.id)+'">Remove</button></div></div>';
+  });
+  h+='</div></div>';
+  $('#hfwrap').innerHTML=h;
+}
+
+function renderAll(){renderControls();renderScreen();renderSheet();renderDay();renderHF();}
+
+/* ---------- events ---------- */
+function copyText(text,srcEl){
+  function fb(){try{if(srcEl){srcEl.focus();srcEl.select();}var ok=document.execCommand('copy');toast(ok?'Copied':'Select the text and copy it');}catch(e){toast('Select the text and copy it');}}
+  if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(text).then(function(){toast('Copied');},fb);}else fb();
+}
+function selectDay(n){ui.day=Math.max(1,Math.min(DAYS,n));ui.draftEdited=false;}
+document.addEventListener('click',function(e){
+  var el=e.target.closest('[data-a]');if(!el)return;
+  var a=el.getAttribute('data-a'),v=el.getAttribute('data-v'),id=el.getAttribute('data-id'),n=Number(el.getAttribute('data-n'));
+  if(a==='theme'){
+    var root=document.documentElement;
+    var cur=root.getAttribute('data-theme')||(window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light');
+    var nx=cur==='dark'?'light':'dark';root.setAttribute('data-theme',nx);try{localStorage.setItem(LS_THEME,nx);}catch(x){}return;
+  }
+  if(a==='level'){ui.level=Number(v);ui.idea=null;renderControls();roll();if(window.innerWidth<=720)scrollToEl('#screen');return;}
+  if(a==='pill'){ui.theme=v;renderControls();if(ui.level){ui.idea=null;roll();}else{ui.msg='';ui.pinnedNote='';renderScreen();}return;}
+  if(a==='theme-go'){ui.theme=v;if(!ui.level)ui.level=1;renderControls();ui.idea=null;roll();scrollToEl('#roll');return;}
+  if(a==='reroll'){roll();return;}
+  if(a==='pin'){
+    var sel=$('#pinday'),day=sel?Number(sel.value):0;
+    if(!ui.idea||!day||!isOpen(day))return;
+    var i=ui.idea;
+    S.days[day]=Object.assign(blankDay(),{ideaId:i.id,level:i.l,status:'planned'});
+    if(S.used.indexOf(i.id)===-1)S.used.push(i.id);
+    save();ui.idea=null;ui.pinDay=null;ui.day=day;ui.draftEdited=false;
+    ui.pinnedNote='Pinned to Day '+day+'. Press a level to roll another.';
+    renderScreen();renderSheet();renderDay();toast('Pinned to Day '+day);return;
+  }
+  if(a==='day'){selectDay(n);renderSheet();renderDay();scrollToEl('#day');return;}
+  if(a==='prev'){selectDay(curDay()-1);renderSheet();renderDay();return;}
+  if(a==='next'){selectDay(curDay()+1);renderSheet();renderDay();return;}
+  if(a==='status'){
+    var d0=getDay(curDay());
+    setField(curDay(),'status',v);
+    if(v==='shipped'&&d0.status!=='shipped')ui.justShipped=curDay();
+    renderSheet();renderDay();if(v==='shipped'&&d0.status!=='shipped')toast('Day '+curDay()+' shipped. Sticker earned.');return;
+  }
+  if(a==='roll-for-day'){ui.pinDay=curDay();if(!ui.level)ui.level=1;renderControls();ui.idea=null;roll();scrollToEl('#roll');return;}
+  if(a==='rest'){S.days[curDay()]=Object.assign(blankDay(),{status:'skipped'});save();renderSheet();renderDay();return;}
+  if(a==='unrest'){delete S.days[curDay()];save();renderSheet();renderDay();return;}
+  if(a==='unpin'){
+    var cd=getDay(curDay());
+    S.used=S.used.filter(function(x){return x!==cd.ideaId;});
+    delete S.days[curDay()];save();ui.draftEdited=false;renderScreen();renderSheet();renderDay();return;
+  }
+  if(a==='copy'){var ta=$('#draft');if(ta)copyText(ta.value,ta);return;}
+  if(a==='rebuild'){ui.draftEdited=false;renderDay();var dt=$('details.draft');if(dt)dt.open=true;return;}
+  if(a==='copy-readme'){copyText($('#readme').textContent,null);return;}
+  if(a==='ch-add'){
+    var cn=$('#ch-name').value.trim();
+    if(!cn){toast('Enter the challenge name first');$('#ch-name').focus();return;}
+    S.challenges.push({id:uid(),name:cn,url:$('#ch-url').value.trim(),status:$('#ch-status').value});save();renderHF();return;
+  }
+  if(a==='ch-del'){S.challenges=S.challenges.filter(function(c){return c.id!==id;});save();renderHF();return;}
+  if(a==='backup-copy'){var txt=JSON.stringify(S);var bb=$('#backupbox');bb.value=txt;copyText(txt,bb);return;}
+  if(a==='backup-restore'){
+    var box=$('#backupbox');
+    try{var p=JSON.parse(box.value);if(!p||typeof p!=='object'||!p.days)throw new Error('shape');S=normalise(p);save();box.value='';renderAll();toast('Progress restored');}
+    catch(x){toast('That does not look like a valid backup');}
+    return;
+  }
+  if(a==='reset'){
+    if(el.getAttribute('data-armed')!=='1'){el.setAttribute('data-armed','1');el.textContent='Press again to confirm';setTimeout(function(){el.removeAttribute('data-armed');el.textContent='Reset everything';},4000);return;}
+    S=defaultState();save();ui.idea=null;ui.day=null;ui.pinnedNote='';ui.msg='';renderAll();toast('Sheet cleared');return;
+  }
+});
+document.addEventListener('input',function(e){
+  var el=e.target;
+  if(el.id==='draft'){ui.draftEdited=true;ui.draftText=el.value;return;}
+  var f=el.getAttribute('data-f');
+  if(f){
+    setField(curDay(),f,el.value);
+    if(!ui.draftEdited){var dr=$('#draft');if(dr)dr.value=buildDraft(curDay());}
+  }
+});
+document.addEventListener('change',function(e){
+  var el=e.target;
+  var hk=el.getAttribute('data-h');if(hk){S.hf[hk]=el.checked;save();return;}
+  var c=el.getAttribute('data-c');
+  if(c==='credit'){ui.credit=el.checked;if(!ui.draftEdited){var dr=$('#draft');if(dr)dr.value=buildDraft(curDay());}return;}
+  var cf=el.getAttribute('data-cf');
+  if(cf==='status'){var cid=el.getAttribute('data-id');S.challenges.forEach(function(x){if(x.id===cid)x.status=el.value;});save();renderHF();return;}
+  if(el.getAttribute('data-u')==='pinday'){ui.pinDay=Number(el.value);return;}
+});
+
+/* ---------- boot ---------- */
+try{var th=localStorage.getItem(LS_THEME);if(th)document.documentElement.setAttribute('data-theme',th);}catch(e){}
+var local=loadLocal();if(local)S=local;
+var b1=$('#burst1');if(b1)b1.setAttribute('points',BURST);
+renderAll();
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,12 @@
+{
+  "name": "buildtober",
+  "version": "1.0.0",
+  "description": "31 days, 31 things worth building. A free October build-along with an idea generator and sticker-sheet tracker.",
+  "private": true,
+  "license": "MIT",
+  "author": "Muhammad Murtuza Hussain (https://muhammadmurtuza.com)",
+  "scripts": {
+    "validate": "node tools/validate.mjs"
+  },
+  "engines": { "node": ">=18" }
+}

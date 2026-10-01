@@ -1,0 +1,57 @@
+name: Suggest a project idea
+description: Propose an idea for the Buildtober generator
+title: "Idea: "
+labels: ["idea"]
+body:
+  - type: input
+    id: title
+    attributes:
+      label: Title
+      description: A short, specific name for the project.
+    validations:
+      required: true
+  - type: dropdown
+    id: level
+    attributes:
+      label: Level
+      options:
+        - Level 1, a quick win (an hour or two)
+        - Level 2, a solid build (an evening)
+        - Level 3, a showcase (a weekend)
+    validations:
+      required: true
+  - type: dropdown
+    id: theme
+    attributes:
+      label: Theme
+      options:
+        - Threat intelligence
+        - Open-source AI
+        - Detection and logs
+        - Cloud, edge and appsec
+        - Governance and risk
+        - People and behaviour
+        - General dev
+    validations:
+      required: true
+  - type: textarea
+    id: problem
+    attributes:
+      label: The real-world problem it solves
+      description: One or two sentences a non-specialist would understand.
+    validations:
+      required: true
+  - type: textarea
+    id: step
+    attributes:
+      label: A first step
+      description: One concrete action someone can take in the first few minutes.
+    validations:
+      required: true
+  - type: checkboxes
+    id: safety
+    attributes:
+      label: Safety check
+      options:
+        - label: This idea is defensive or educational and can be built with test data on systems the builder owns.
+          required: true
